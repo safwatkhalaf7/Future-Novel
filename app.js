@@ -81,8 +81,14 @@ class DataManager {
         };
 
         users.push(newUser);
-        localStorage.setItem(this.STORAGE_KEY_USERS, JSON.stringify(users));
-        return newUser;
+        try {
+            localStorage.setItem(this.STORAGE_KEY_USERS, JSON.stringify(users));
+            return newUser;
+        } catch (e) {
+            console.error('Storage Error:', e);
+            alert('عفواً، مساحة التخزين ممتلئة. حاول استخدام صورة أصغر حجماً.');
+            return null;
+        }
     }
 
     getUserById(id) {

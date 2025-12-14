@@ -47,6 +47,10 @@ addUserForm.addEventListener('submit', async (e) => {
     let idImageBase64 = null;
 
     if (avatarInput.files && avatarInput.files[0]) {
+        if (avatarInput.files[0].size > 500000) { // 500KB limit
+            alert('صورة الملف الشخصي كبيرة جداً. يرجى اختيار صورة أقل من 500 كيلوبايت.');
+            return;
+        }
         try {
             avatarBase64 = await readFileAsBase64(avatarInput.files[0]);
         } catch (err) {
@@ -55,6 +59,10 @@ addUserForm.addEventListener('submit', async (e) => {
     }
 
     if (idInput.files && idInput.files[0]) {
+        if (idInput.files[0].size > 500000) { // 500KB limit
+            alert('صورة البطاقة كبيرة جداً. يرجى اختيار صورة أقل من 500 كيلوبايت.');
+            return;
+        }
         try {
             idImageBase64 = await readFileAsBase64(idInput.files[0]);
         } catch (err) {
@@ -94,8 +102,13 @@ addUserForm.addEventListener('submit', async (e) => {
         // CREATE MODE
         if (avatarBase64) data.avatar = avatarBase64; // Add only if exists
         const newUser = db.addUser(data);
-        alert(`تم اضافة العميل بنجاح!\n\nبيانات الدخول للعميل:\nاسم المستخدم: ${newUser.username}\nكلمة المرور: ${newUser.password}`);
-        addUserForm.reset();
+
+        if (newUser) {
+            alert(`تم اضافة العميل بنجاح!\n\nبيانات الدخول للعميل:\nاسم المستخدم: ${newUser.username}\nكلمة المرور: ${newUser.password}`);
+            addUserForm.reset();
+        } else {
+            // Error handled in db.addUser
+        }
     }
 
     renderUsers();
