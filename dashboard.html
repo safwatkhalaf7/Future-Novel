@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المستثمر - روية المستقبل</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stat-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: right;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            color: var(--primary);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-paid {
+            background: rgba(39, 174, 96, 0.2);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(242, 201, 76, 0.2);
+            color: var(--primary-hover);
+        }
+
+        .status-future {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" style="padding-top: 1rem; padding-bottom: 3rem;">
+
+        <!-- News Ticker -->
+        <div id="news-ticker-container"
+            style="background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap; margin-bottom: 1.5rem; padding: 0.5rem 0;">
+            <div id="news-ticker-content"
+                style="display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; color: var(--primary);">
+                <!-- Content via JS -->
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="d-flex justify-between align-center" style="margin-bottom: 2rem;">
+            <div class="d-flex align-center gap-1">
+                <div id="user-avatar-container"
+                    style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; background: #333;">
+                    <!-- Avatar Image or Placeholder -->
+                    <span style="font-size: 1.5rem;">👤</span>
+                </div>
+                <div>
+                    <h2 style="margin-bottom: 0;">مرحباً، <span id="user-name" class="text-primary">...</span></h2>
+                    <p class="text-muted" id="user-email" style="font-size: 0.9rem;">...</p>
+                </div>
+            </div>
+
+            <div class="d-flex align-center gap-1">
+                <div style="text-align: left; display: none; @media(min-width: 768px){display:block;}">
+                    <h1 style="font-size: 1.2rem; margin: 0; color: var(--primary);">رؤية المستقبل</h1>
+                    <span style="font-size: 0.8rem; letter-spacing: 2px; color: var(--text-muted);">FUTURE VISION</span>
+                </div>
+                <button id="logout-btn" class="btn btn-outline" style="font-size: 0.9rem;">تسجيل خروج</button>
+            </div>
+        </header>
+
+        <!-- Notifications Area -->
+        <div id="dashboard-notifications" style="margin-bottom: 2rem;">
+            <!-- Populated via JS -->
+        </div>
+
+        <!-- Stats Grid -->
+        <!-- Stats Grid -->
+        <div class="grid" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <span class="text-muted">قيمة الايداع</span>
+                <div class="stat-value" id="user-deposit">...</div>
+            </div>
+            <div class="stat-card">
+                <span class="text-muted">الربح الشهري</span>
+                <div class="stat-value" id="user-profit">...</div>
+            </div>
+            <div class="stat-card">
+                <span class="text-muted">اجمالي العقد</span>
+                <div class="stat-value"><span id="user-duration">...</span> شهور</div>
+            </div>
+        </div>
+
+        <!-- Growth Chart and Activity Log -->
+        <!-- Growth Chart and Activity Log -->
+        <div class="grid" style="margin-bottom: 2rem; grid-template-columns: 2fr 1fr;">
+            <!-- Chart -->
+            <div class="card" style="min-height: 400px;">
+                <h3 class="text-primary">نمو الأرباح المتوقع</h3>
+                <div style="position: relative; height: 300px; width: 100%;">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Profile & Verification -->
+            <div class="card" style="position: relative; overflow: hidden;">
+                <div id="verified-badge"
+                    style="display: none; position: absolute; top: -10px; left: -10px; background: var(--success); color: #000; padding: 0.5rem 2rem; transform: rotate(-45deg); font-weight: bold; box-shadow: 0 0 10px var(--success);">
+                    موثق ✅</div>
+                <div class="text-center" style="margin-bottom: 1.5rem;">
+                    <div id="user-avatar-display"
+                        style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); margin: 0 auto 1rem; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem;">👤</span>
+                    </div>
+                    <h2 id="profile-name" style="margin-bottom: 0.2rem;">...</h2>
+                    <p id="profile-username" class="text-muted text-small">...</p>
+                    <div id="verification-status" style="margin-top: 0.5rem;">
+                        <span class="status-badge" style="background: rgba(255,255,255,0.1); color: #aaa;">غير
+                            موثق</span>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px dashed var(--border); padding-top: 1rem;">
+                    <div class="d-flex justify-between" style="margin-bottom: 0.5rem;">
+                        <span class="text-muted">الهاتف:</span>
+                        <span id="profile-phone">...</span>
+                    </div>
+                    <div class="d-flex justify-between" style="margin-bottom: 0.5rem;">
+                        <span class="text-muted">الرقم القومي:</span>
+                        <span id="profile-national-id">...</span>
+                    </div>
+                    <div class="d-flex justify-between" style="margin-bottom: 0.5rem;">
+                        <span class="text-muted">تاريخ التعاقد:</span>
+                        <span id="profile-start-date">...</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button id="view-id-btn" class="btn btn-outline w-100" style="font-size: 0.8rem; display:none;">عرض
+                        صورة البطاقة</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Dashboard Grid -->
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+
+            <!-- Profit Schedule (Wide) -->
+            <div class="card col-span-2" style="min-height: 400px;">
+                <div class="d-flex justify-between align-center" style="margin-bottom: 1rem;">
+                    <h3 class="text-primary" style="margin:0;">جدول الارباح المستحقة</h3>
+                    <div class="d-flex gap-1">
+                        <button id="show-upcoming" class="btn btn-primary"
+                            style="font-size: 0.8rem; padding: 0.5rem 1rem;">القادمة</button>
+                        <button id="show-history" class="btn btn-outline"
+                            style="font-size: 0.8rem; padding: 0.5rem 1rem;">السجل السابق</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>تاريخ الاستحقاق</th>
+                                <th>المبلغ</th>
+                                <th>الحالة</th>
+                                <th>العد التنازلي</th>
+                            </tr>
+                        </thead>
+                        <tbody><!-- Generated via JS --></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Financial Info -->
+            <div class="card">
+                <h3 class="text-primary">معلومات مالية</h3>
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-small">العنوان</label>
+                    <div id="user-address" style="font-size: 1.1rem; letter-spacing: 0;">...</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-small">المحفظة / البنك</label>
+                    <div id="user-wallet" style="font-size: 1.1rem;">...</div>
+                </div>
+                <div style="margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                    <button id="print-statement-btn" class="btn btn-outline w-100">🖨️ طباعة كشف حساب</button>
+                    <a href="#" id="contract-link" target="_blank" class="btn btn-primary w-100"
+                        style="margin-top: 0.5rem;">عرض العقد الالكتروني</a>
+                </div>
+            </div>
+
+            <!-- Withdrawal Section -->
+            <div class="card" style="border: 1px solid var(--primary);">
+                <h3 class="text-primary" style="margin-bottom: 1rem;">طلب سحب أرباح</h3>
+                <div class="input-group">
+                    <label>المبلغ المطلوب (ج.م)</label>
+                    <input type="number" id="withdraw-amount" placeholder="0.00">
+                </div>
+                <button id="withdraw-btn" class="btn btn-primary w-100" style="margin-bottom: 1.5rem;">ارسال
+                    الطلب</button>
+                <h4 style="margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">سجل
+                    الطلبات</h4>
+                <div style="max-height: 150px; overflow-y: auto;">
+                    <table id="withdrawals-table" style="font-size: 0.9rem;">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>المبلغ</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody><!-- Populated via JS --></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Group Leader -->
+            <div class="card">
+                <h3 class="text-primary" style="margin-bottom: 1rem;">قائد المجموعة</h3>
+                <div class="d-flex align-center gap-1" style="margin-bottom: 1rem;">
+                    <div
+                        style="width: 50px; height: 50px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem;">
+                        👔</div>
+                    <div>
+                        <div style="font-weight: bold; font-size: 1.1rem;" id="leader-name">...</div>
+                        <div class="text-muted" style="font-size: 0.9rem;">أخصائي متابعة</div>
+                    </div>
+                </div>
+                <a href="#" id="leader-whatsapp" target="_blank" class="btn btn-outline w-100"
+                    style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; border-color: #25D366; color: #25D366;">
+                    <span style="font-size: 1.2rem;">💬</span> واتساب
+                </a>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="card" style="max-height: 400px; overflow-y: auto;">
+                <h3 class="text-primary" style="margin-bottom: 1rem;">سجل النشاطات</h3>
+                <div id="activity-log-container"><!-- Populated via JS --></div>
+            </div>
+
+            <!-- Security -->
+            <div class="card">
+                <h3 class="text-primary">الأمان</h3>
+                <label class="text-muted text-small">تغيير كلمة المرور</label>
+                <div class="d-flex gap-1" style="margin-top: 0.5rem;">
+                    <input type="password" id="new-password" placeholder="جديدة"
+                        style="padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); background: #222; color: #fff; width: 100%;">
+                    <button id="change-pass-btn" class="btn btn-outline" style="font-size: 0.8rem;">حفظ</button>
+                </div>
+            </div>
+
+            <!-- Support Tickets (Wide) -->
+            <div class="card col-span-2">
+                <h3 class="text-primary" style="margin-bottom: 1rem;">الدعم الفني</h3>
+                <div id="support-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 1rem;"></div>
+                <button id="open-ticket-btn" class="btn btn-primary w-100">فتح تذكرة جديدة</button>
+                <div id="new-ticket-form" style="display: none; margin-top: 1rem;">
+                    <input type="text" id="ticket-subject" placeholder="العنوان"
+                        style="width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; background: #222; border: 1px solid var(--border); color:#fff;">
+                    <textarea id="ticket-message" placeholder="التفاصيل..."
+                        style="width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; background: #222; border: 1px solid var(--border); color:#fff; min-height: 60px;"></textarea>
+                    <div class="d-flex gap-1">
+                        <button id="submit-ticket-btn" class="btn btn-primary" style="flex: 1;">ارسال</button>
+                        <button id="cancel-ticket-btn" class="btn btn-outline" style="flex: 1;">الغاء</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+/* Grid Spans */
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.col-span-3 {
+    grid-column: span 3;
+}
+
+@media (max-width: 992px) {
+
+    .col-span-2,
+    .col-span-3 {
+        grid-column: span 1;
+    }
+}

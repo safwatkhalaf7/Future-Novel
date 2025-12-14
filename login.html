@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل دخول العملاء - روية المستقبل</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="d-flex w-100 h-100vh align-center justify-center">
+
+    <div class="card animate-fade-in" style="max-width: 400px; width: 100%;">
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <a href="index.html" class="text-primary"
+                style="display: block; margin-bottom: 1rem; font-size: 0.9rem;">&larr; العودة للرئيسية</a>
+            <h2>تسجيل دخول العملاء</h2>
+            <p class="text-muted">قم بتسجيل الدخول لمتابعة استثماراتك</p>
+        </div>
+
+        <form id="user-login-form">
+            <div class="input-group">
+                <label>اسم المستخدم</label>
+                <input type="text" id="username" placeholder="مثال: ahmed123" required>
+            </div>
+            <div class="input-group">
+                <label>كلمة المرور / كود الدخول</label>
+                <input type="password" id="password" placeholder="******" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">دخول</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>

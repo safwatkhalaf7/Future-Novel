@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الادارة - روية المستقبل</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Notification Container -->
+    <div id="notification-area" style="position: fixed; top: 20px; left: 20px; z-index: 1000;"></div>
+
+    <div class="container" style="padding-top: 2rem; padding-bottom: 2rem;">
+
+        <!-- Header -->
+        <header class="d-flex justify-between align-center" style="margin-bottom: 2rem;">
+            <div class="d-flex align-center gap-1">
+                <a href="index.html" class="text-primary" style="font-size: 1.2rem;">&larr; الرئيسية</a>
+                <h3>لوحة تحكم الادارة</h3>
+            </div>
+            <button id="logout-btn" class="btn btn-outline" style="display: none;">تسجيل خروج</button>
+        </header>
+
+        <!-- Login Section -->
+        <section id="login-section" class="card" style="max-width: 400px; margin: 0 auto;">
+            <h2 class="text-center text-primary">تسجيل دخول الادارة</h2>
+            <form id="admin-login-form">
+                <div class="input-group">
+                    <label>اسم المستخدم</label>
+                    <input type="text" id="admin-username" required>
+                </div>
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">دخول</button>
+            </form>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" style="display: none;">
+
+            <!-- Admin Stats Overview -->
+            <!-- Admin Stats Overview -->
+            <div class="grid" style="margin-bottom: 2rem;">
+                <div class="stat-card" style="background: linear-gradient(135deg, #2c3e50, #000);">
+                    <span class="text-muted">إجمالي الإيداعات</span>
+                    <div class="stat-value" id="admin-total-deposits">...</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #2c3e50, #000);">
+                    <span class="text-muted">إجمالي المدفوعات</span>
+                    <div class="stat-value" id="admin-total-payouts" style="color: var(--success);">...</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #2c3e50, #000);">
+                    <span class="text-muted">المشتركين النشطين</span>
+                    <div class="stat-value" id="admin-active-users" style="color: #f1c40f;">...</div>
+                </div>
+            </div>
+
+            <div class="grid">
+
+                <!-- Add User Form -->
+                <div class="card" style="flex: 1; min-width: 300px;">
+                    <h3 class="text-primary">اضافة عميل جديد</h3>
+                    <form id="add-user-form">
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>اسم العميل</label>
+                                <input type="text" name="name" required placeholder="الاسم الثلاثي">
+                            </div>
+                            <div class="input-group">
+                                <label>البريد الالكتروني</label>
+                                <input type="email" name="email" placeholder="example@mail.com">
+                            </div>
+                        </div>
+
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>رقم الهاتف</label>
+                                <input type="text" name="phone" placeholder="01xxxxxxxxx">
+                            </div>
+                            <div class="input-group">
+                                <label>الرقم القومي</label>
+                                <input type="text" name="nationalId" placeholder="14 رقم">
+                            </div>
+                        </div>
+
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>الصورة الشخصية</label>
+                                <input type="file" id="user-avatar-input" accept="image/*">
+                            </div>
+                            <div class="input-group">
+                                <label>صورة البطاقة</label>
+                                <input type="file" id="user-id-input" accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="input-group"
+                            style="display:flex; align-items:center; gap:0.5rem; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:8px;">
+                            <input type="checkbox" name="isVerified" id="isVerified" style="width:20px; height:20px;">
+                            <label for="isVerified" style="margin:0; cursor:pointer; color:var(--success);">حساب موثق
+                                (Verified)</label>
+                        </div>
+
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>قيمة الايداع (ج.م)</label>
+                                <input type="number" name="deposit" required placeholder="50000">
+                            </div>
+                            <div class="input-group">
+                                <label>قيمة الربح (ج.م)</label>
+                                <input type="number" name="profit" required placeholder="5000">
+                            </div>
+                        </div>
+
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>موعد استلام الربح</label>
+                                <select name="payoutDay" required>
+                                    <option value="" disabled selected>اختر يوم الاستلام...</option>
+                                    <script>
+                                        for (let i = 1; i <= 30; i++) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>مدة التعاقد</label>
+                                <select name="duration" required>
+                                    <option value="6">6 شهور</option>
+                                    <option value="8">8 شهور</option>
+                                    <option value="10">10 شهور</option>
+                                    <option value="12">12 شهر</option>
+                                    <option value="24">24 شهر</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid-2 gap-1">
+                            <div class="input-group">
+                                <label>العنوان</label>
+                                <input type="text" name="address" placeholder="العنوان بالتفصيل">
+                            </div>
+
+                            <div class="input-group">
+                                <label>المحفظة / البنك</label>
+                                <input type="text" name="walletNo" placeholder="010xxxxxxxx / IBAN">
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                            style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary);">بيانات قائد
+                                المجموعة</h3>
+                            <div class="grid-2 gap-1">
+                                <div>
+                                    <label>اسم القائد</label>
+                                    <input type="text" name="leaderName" placeholder="اسم قائد المجموعة">
+                                </div>
+                                <div>
+                                    <label>رقم الهاتف</label>
+                                    <input type="text" name="leaderPhone" placeholder="01xxxxxxxxx">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" style="margin-top: 1rem;">انشاء
+                            حساب</button>
+                    </form>
+                </div>
+
+                <!-- Users List -->
+                <div class="card" style="flex: 2; min-width: 300px;">
+                    <div class="d-flex justify-between align-center">
+                        <h3 class="text-primary">قائمة العملاء</h3>
+                        <button id="export-btn" class="btn btn-outline"
+                            style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">📥 تحميل Excel</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="users-table">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>المستخدم/السر</th>
+                                    <th>الايداع</th>
+                                    <th>الربح</th>
+                                    <th>المدة</th>
+                                    <th>قائد المجموعة</th>
+                                    <th>تاريخ الانشاء</th>
+                                    <th>اجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Users will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid" style="margin-top: 2rem;">
+
+                <!-- Withdrawal Requests List -->
+                <div class="card" style="flex: 2; min-width: 300px;">
+                    <h3 class="text-primary">طلبات السحب</h3>
+                    <div class="table-container">
+                        <table id="withdrawals-table">
+                            <thead>
+                                <tr>
+                                    <th>العميل</th>
+                                    <th>المبلغ</th>
+                                    <th>تاريخ الطلب</th>
+                                    <th>المحفظة/البنك</th>
+                                    <th>قائد المجموعة</th>
+                                    <th>الحالة</th>
+                                    <th>اجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Requests populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Support Tickets List -->
+                <div class="card" style="flex: 2; min-width: 300px;">
+                    <h3 class="text-primary">تذاكر الدعم الفني</h3>
+                    <div id="admin-support-list" style="max-height: 300px; overflow-y: auto;">
+                        <!-- Tickets populated here -->
+                    </div>
+                </div>
+
+                <!-- Notification Sender -->
+                <div class="card" style="flex: 1; min-width: 300px; margin-top: 1rem; width: 100%;">
+                    <h3 class="text-primary">ارسال تنبيه عام</h3>
+                    <div class="d-flex gap-1" style="flex-wrap: wrap;">
+                        <input type="text" id="notif-message" placeholder="محتوى التنبيه..."
+                            style="flex: 3; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px; background: #222; color: #fff;">
+                        <select id="notif-type"
+                            style="flex: 1; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px; background: #222; color: #fff;">
+                            <option value="general">عام (معلومة)</option>
+                            <option value="alert">تنبيه (هام)</option>
+                            <option value="success">نجاح (اخضر)</option>
+                        </select>
+                        <button id="send-notif-btn" class="btn btn-primary" style="flex: 1;">ارسال للجميع</button>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                        <h4 class="text-muted" style="margin-bottom: 0.5rem; font-size: 0.9rem;">الاعلانات النشطة</h4>
+                        <div id="admin-notifications-list" style="max-height: 200px; overflow-y: auto;">
+                            <!-- Active notifications list -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عقد استثمار - روية المستقبل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D4AF37;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #fff;
+            padding: 2rem;
+            color: #000;
+            direction: rtl;
+        }
+
+        .contract-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #000;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .title {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            text-decoration: underline;
+        }
+
+        .content {
+            line-height: 2;
+            font-size: 1.1rem;
+        }
+
+        .field {
+            font-weight: bold;
+            border-bottom: 1px dotted #000;
+            padding: 0 10px;
+        }
+
+        .terms {
+            margin-top: 2rem;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+
+        .terms ul {
+            list-style: decimal;
+            padding-right: 1.5rem;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+        }
+
+        .sig-box {
+            text-align: center;
+            width: 40%;
+        }
+
+        .sig-line {
+            boarder-top: 1px solid #000;
+            margin-top: 3rem;
+            border-top: 1px solid #000;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        @media print {
+            .btn-print {
+                display: none;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .contract-container {
+                border: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-15deg);
+            width: 120px;
+            height: 120px;
+            border: 3px solid #c0392b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            pointer-events: none;
+            box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.3) inset;
+        }
+
+        .stamp-inner {
+            color: #c0392b;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.4;
+            border: 1px dashed #c0392b;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="btn-print" onclick="window.print()">طباعة العقد</button>
+
+    <div class="contract-container">
+        <div class="header">
+            <div class="logo">روية المستقبل للاستثمار</div>
+            <div class="title">عقد استثمار وادارة محافظ الكترونية</div>
+        </div>
+
+        <div class="content">
+            <p>انه في يوم <span id="contract-date" class="field">...</span>، تم الاتفاق بين كل من:</p>
+
+            <p><strong>الطرف الأول:</strong> شركة روية المستقبل للاستثمار والاعلانات الالكترونية، ومقرها الرئيسي المملكة
+                العربية السعودية (مدير المحفظة).</p>
+            <p><strong>الطرف الثاني:</strong> السيد/ة <span id="user-name" class="field">...</span> (المستثمر).</p>
+
+            <p><strong>تم الاتفاق على ما يلي:</strong></p>
+            <p>1. قام الطرف الثاني بإيداع مبلغ وقدره <span id="deposit-amount" class="field">...</span> بغرض الاستثمار.
+            </p>
+            <p>2. مدة هذا التعاقد هي <span id="contract-duration" class="field">...</span> شهور تبدأ من تاريخ هذا العقد.
+            </p>
+            <p>3. يلتزم الطرف الأول بصرف عائد شهري قدره <span id="profit-amount" class="field">...</span> للطرف الثاني.
+            </p>
+            <p>4. يتم تحويل الأرباح على حساب رقم: <span id="wallet-no" class="field">...</span>.</p>
+        </div>
+
+        <div class="terms">
+            <h3>شروط واحكام:</h3>
+            <ul>
+                <li>هذا العقد ساري المفعول من تاريخ التوقيع ولا يجوز الغاؤه الا بانقضاء المدة المتعاقد عليها بالكامل.
+                </li>
+                <li>تلتزم الشركة بإرجاع أصل مبلغ الوديعة للطرف الثاني في حالة طلب ذلك بعد انتهاء مدة التعاقد.</li>
+                <li>يقر الطرف الثاني بصحة كافة البيانات والمستندات المقدمة منه، ويتحمل المسؤولية القانونية الكاملة في
+                    حال ثبوت عكس ذلك.</li>
+                <li>تلتزم الشركة بالحفاظ على سرية بيانات الطرف الثاني وعدم مشاركتها مع أي جهة خارجية إلا بموجب طلب قضائي
+                    رسمي.</li>
+                <li>تخضع جميع التعاملات المالية والإجراءات القانونية لهذا العقد للأنظمة واللوائح المعمول بها في المملكة
+                    العربية السعودية.</li>
+                <li>لا تتحمل الشركة مسؤولية أي تأخير في التحويلات ناتج عن ظروف قاهرة خارجة عن إرادتها (مثل الكوارث
+                    الطبيعية أو تعطل الأنظمة البنكية العالمية).</li>
+                <li>يقر الطرف الثاني بمسؤوليته الكاملة عن إخراج الزكاة والضرائب المستحقة على أرباحه وفقاً للأنظمة
+                    الشرعية والقانونية.</li>
+                <li>يعتبر هذا العقد وثيقة إلكترونية ملزمة ومعتمدة بموجب نظام التعاملات الإلكترونية، ولها حجية الإثبات
+                    الكاملة أمام القضاء.</li>
+                <li>تختص المحاكم والجهات القضائية في المملكة العربية السعودية بالفصل في أي نزاع قد ينشأ -لا قدر الله- عن
+                    تنفيذ أو تفسير هذا العقد.</li>
+                <li>يحق للشركة استثمار المبلغ المودع في المحافظ الاستثمارية المتنوعة (أسهم، عقار، عملات) وفقاً لرؤيتها
+                    الاقتصادية وبما يحقق مصلحة الطرفين.</li>
+                <li>تلتزم الشركة بأن تكون جميع معاملاتها واستثماراتها متوافقة تماماً مع أحكام الشريعة الإسلامية الغراء.
+                </li>
+                <li>يقر الطرف الثاني بأن الأموال المودعة هي من كسب حلال ومشروع، وأنه غير متورط في أي أنشطة غسيل أموال أو
+                    تمويل إرهاب، وتتحمل الشركة مسؤولية تطبيق إجراءات "اعرف عميلك" (KYC).</li>
+                <li>يحق للشركة تسجيل المكالمات والمراسلات لأغراض ضمان الجودة وتوثيق التعاملات، وتعتبر هذه التسجيلات حجة
+                    ملزمة عند الحاجة.</li>
+                <li>في حال وفاة المستثمر -لا قدر الله- تؤول الحقوق والالتزامات إلى الورثة الشرعيين بعد تقديم المستندات
+                    الرسمية اللازمة.</li>
+            </ul>
+        </div>
+
+        <div class="signatures">
+            <div class="sig-box" style="position: relative;">
+                <p><strong>الطرف الأول</strong></p>
+                <p style="margin-bottom: 5px;">شركة روية المستقبل للاستثمار</p>
+                <div class="sig-line">المدير العام / ختم الشركة</div>
+
+                <!-- Stamp -->
+                <div class="stamp">
+                    <div class="stamp-inner">
+                        روية المستقبل<br>للاستثمار
+                    </div>
+                </div>
+            </div>
+            <div class="sig-box">
+                <p><strong>الطرف الثاني</strong></p>
+                <p style="margin-bottom: 5px;" id="sig-user-name">...</p>
+                <div class="sig-line">توقيع المستثمر</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Load Data
+        const dbHelper = new DataManager(); // existing class from app.js
+
+        function getUser() {
+            // Priority 1: Check URL Param
+            const urlParams = new URLSearchParams(window.location.search);
+            const uid = urlParams.get('uid');
+            if (uid) {
+                const userById = dbHelper.getUserById(uid);
+                if (userById) return userById;
+            }
+
+            // Priority 2: Check Session
+            const currentUserStr = sessionStorage.getItem('fv_current_user');
+            if (currentUserStr) {
+                return JSON.parse(currentUserStr);
+            }
+
+            return null;
+        }
+
+        const user = getUser();
+
+        if (!user) {
+            document.body.innerHTML = '<div style="text-align:center; padding-top:50px;"><h2>خطأ: لا يمكن العثور على بيانات العميل.</h2><p>يرجى العودة وتسجيل الدخول مرة أخرى.</p></div>';
+        } else {
+            document.getElementById('contract-date').textContent = dbHelper.formatDate(user.createdAt);
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('sig-user-name').textContent = user.name;
+            document.getElementById('deposit-amount').textContent = dbHelper.formatCurrency(user.deposit);
+            document.getElementById('contract-duration').textContent = user.duration;
+            document.getElementById('profit-amount').textContent = dbHelper.formatCurrency(user.profit);
+            document.getElementById('wallet-no').textContent = user.walletNo || user.cardNo || '................';
+        }
+    </script>
+</body>
+
+</html>
