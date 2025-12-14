@@ -18,7 +18,7 @@ let editingUserId = null; // Track which user is being edited
 // Event Listeners
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = document.getElementById('admin-username').value;
+    const username = document.getElementById('admin-username').value.toLowerCase().trim();
     const password = document.getElementById('admin-password').value;
 
     if (db.adminLogin(username, password)) {

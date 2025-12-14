@@ -2,7 +2,7 @@ const loginForm = document.getElementById('user-login-form');
 
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = document.getElementById('username').value;
+    const username = document.getElementById('username').value.toLowerCase().trim();
     const password = document.getElementById('password').value;
 
     const user = db.userLogin(username, password);
