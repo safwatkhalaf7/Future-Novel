@@ -18,7 +18,7 @@ class DataManager {
         // Initialize default admin if not exists
         // Always enforce secure admin credentials (removes any old accounts)
         const secureAdmin = {
-            username: 'Manager2025',
+            username: 'manager2025', // Lowercase to match input sanitization
             password: 'FV_SecurePass!',
             name: 'Main Admin'
         };
